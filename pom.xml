@@ -116,15 +116,11 @@
 		</plugins>
 	</build>
 	
-	<distributionManagement>
-    <repository>
-        <id>maven-releases</id>
-        <url>http://54.254.190.235:8081/repository/maven-releases/</url>
-    </repository>
-    <snapshotRepository>
-        <id>maven-snapshots</id>
-        <url>http://54.254.190.235:8081/repository/maven-snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
+        <distributionManagement>
+                <repository>
+                        <id>dev</id>
+                        <url>file://jarstaging</url>
+                </repository>
+        </distributionManagement>
 
 </project>
