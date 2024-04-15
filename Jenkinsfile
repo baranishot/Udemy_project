@@ -7,7 +7,7 @@ pipeline {
     
     environment {
         PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
-        scannerHome = tool 'sonar-scanner'
+        SCANNER_HOME= tool 'sonar-scanner'
     }
     
     stages {
@@ -18,7 +18,7 @@ pipeline {
         }
         stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv('sonar') {
+                withSonarQubeEnv('aman-sonarqube-server') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Boardgame -Dsonar.projectKey=aman-devops-key_boardgame \
                             -Dsonar.java.binaries=. '''
                 }
