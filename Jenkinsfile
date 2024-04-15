@@ -6,8 +6,7 @@ pipeline {
     }
     
     environment {
-        PATH = "/opt/apache-maven-3.9.6/bin:${PATH}"
-        SCANNER_HOME = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+        PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
     }
     
     stages {
@@ -17,9 +16,11 @@ pipeline {
             }
         }
         stage('SonarQube analysis') {
+            environment {
+                scannerHome = tool 'sonar-scanner'
+            }
             steps {
-                script {
-                    def scannerHome = tool 'sonar-scanner'
+                withSonarQubeEnv('aman-sonarqube-server') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
