@@ -7,6 +7,7 @@ pipeline {
     
     environment {
         PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
+        scannerHome = tool 'sonar-scanner'
     }
     
     stages {
@@ -16,12 +17,18 @@ pipeline {
             }
         }
         stage('SonarQube analysis') {
-            environment {
-                scannerHome = tool 'sonar-scanner'
-            }
             steps {
                 withSonarQubeEnv('aman-sonarqube-server') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh '''$SCANNER_HOME/bin/sonar-scanner 
+                            -Dsonar.projectName="Boardgame"
+                            -Dsonar.projectKey="aman-devops-key_boardgame"
+                            -Dsonar.organization="aman-devops-key"
+                            -Dsonar.language="java"
+                            -Dsonar.sourceEncoding="UTF-8"
+                            -Dsonar.sources="."
+                            -Dsonar.java.binaries="target/classes"
+                            -Dsonar.coverage.jacoco.xmlReportPaths="target/site/jacoco/jacoco.xml"
+                            -Dsonar.verbose=true'''
                 }
             }
         }
